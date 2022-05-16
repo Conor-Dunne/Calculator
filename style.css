@@ -13,6 +13,11 @@ html {
     align-items: center;
   }
 
+  @font-face{
+    font-family:'digital-clock-font';
+    src: url(./ticking-timebomb-bb.regular.ttf);
+   }
+
   .main {
     display: flex;
     flex: 1;
@@ -40,12 +45,20 @@ html {
 
   .screen {
       width: 90%;
-      height: 10rem;
+      height: 65px;
+      padding: 2px 10px;
       background-color:rgb(188, 201, 183);
       border-top: 6px solid #8080805c;
       border-bottom: 6px solid #8080805c;
       border-radius: 6px;
+      font-size: 3rem;
+      font-family:'digital-clock-font';
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
   }
+
 
   .button-pad {
       width: 90%;
