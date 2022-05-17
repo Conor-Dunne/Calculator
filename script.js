@@ -1,7 +1,6 @@
 
 const topScreen = document.querySelector("#screen-top");
 const bottomScreen = document.querySelector("#screen-bottom");
-const onlyNum = new RegExp('^[0-9]*$');
 let userInput = [];
 let num1;
 let num2;
@@ -33,9 +32,9 @@ const operate = function() {
     if (operator === "/") result = divide(num1, num2);
     topScreen.textContent = `${num1} ${operator} ${num2}`;
     bottomScreen.textContent = result;
-    userInput = [];
-    userInput.push(result);
-    console.log(result);
+    num1 = result;
+    console.log(num1);
+    console.log(num2);   
 };
 
 const test = function(btn) {
@@ -50,11 +49,11 @@ const display = function(btn) {
 }
 
 const sign = function() {
-    topScreen.textContent = `${userInput.join("").toString()} +`;
-    num1 = Number(userInput.join("").toString());
     operator = this.textContent;
-    bottomScreen.textContent = "0";
+    topScreen.textContent = `${bottomScreen.textContent} ${operator}`;
+    num1 = Number(bottomScreen.textContent);
     userInput = [];
+    console.log(operator)
 }
 
 
@@ -63,8 +62,8 @@ const sign = function() {
 const input = document.querySelectorAll(".button-pad-btn");
 input.forEach(button => button.addEventListener("click", display));
 
-const plus = document.querySelector("#plus");
-plus.addEventListener("click", sign);
+const selectOperator = document.querySelectorAll(".operator");
+selectOperator.forEach(button => button.addEventListener("click", sign));
 
 const equals = document.querySelector("#equals-btn");
 equals.addEventListener("click", operate);
