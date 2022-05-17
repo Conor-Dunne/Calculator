@@ -26,6 +26,7 @@ const divide = function(a,b) {
 
 const operate = function() {
     num2 = Number(userInput.join("").toString());
+    if (operator === "") return;
     if (operator === "+") result = add(num1,num2);
     if (operator === "-") result = subtract(num1,num2);
     if (operator === "x") result = multiply(num1,num2);
@@ -38,7 +39,7 @@ const operate = function() {
 };
 
 const test = function(btn) {
-    console.log(btn.path[0].innerText);
+    console.log(btn.target.id);
 }
 
 const display = function(btn) {
@@ -49,12 +50,21 @@ const display = function(btn) {
 }
 
 const sign = function() {
+    if (bottomScreen.textContent === "0") return;
     operator = this.textContent;
     topScreen.textContent = `${bottomScreen.textContent} ${operator}`;
     num1 = Number(bottomScreen.textContent);
     userInput = [];
     console.log(operator)
 }
+
+const clearData = function(btn) {
+    if (btn.target.id === "clear-all") {
+        topScreen.textContent = "";
+        bottomScreen.textContent = "0";
+        operator = "";
+    } 
+};
 
 
 
@@ -67,5 +77,8 @@ selectOperator.forEach(button => button.addEventListener("click", sign));
 
 const equals = document.querySelector("#equals-btn");
 equals.addEventListener("click", operate);
+
+const clearBtns = document.querySelectorAll(".clear");
+clearBtns.forEach(button => button.addEventListener("click", clearData));
 
 
