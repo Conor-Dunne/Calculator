@@ -1,11 +1,12 @@
 
 const topScreen = document.querySelector("#screen-top");
 const bottomScreen = document.querySelector("#screen-bottom");
-let userInput = [];
+let lastInput = [];
 let num1 = 0;
 let num2 = 0;
 let operator = "";
 let result = 0;
+let summed = false;
 
 const add = function (a, b) {
     return a + b;
@@ -25,7 +26,7 @@ const divide = function (a, b) {
 
 
 const operate = function () {
-    num2 = Number(userInput.join("").toString());
+    num2 = Number(lastInput.join("").toString());
     if (operator === "") return;
     if (operator === "+") result = add(num1, num2);
     if (operator === "-") result = subtract(num1, num2);
@@ -34,21 +35,18 @@ const operate = function () {
     topScreen.textContent = `${num1} ${operator} ${num2} =`;
     bottomScreen.textContent = result;
     num1 = result;
-    userInput = [];
+    lastInput = [];
+    summed = true;
 };
-
-const test = function (btn) {
-    console.log(btn.target.id);
-}
 
 const display = function (btn) {
     if (bottomScreen.textContent === "0") num2 = 0;
     if (result) {
-        userInput = [];
+        lastInput = [];
         result = "";
     }
-    userInput.push(this.textContent);
-    bottomScreen.textContent = userInput.join("").toString();
+    lastInput.push(this.textContent);
+    bottomScreen.textContent = lastInput.join("").toString();
 }
 
 const chainOperators = function (btn) {
@@ -59,16 +57,17 @@ const chainOperators = function (btn) {
     if (operator === "/") result = divide(num1, num2);
     num1 = result;
     num2 = 0;
-    userInput = [];
+    lastInput = [];
 }
 
-const sign = function (btn) {
+const selectOperator = function (btn) {
     if (bottomScreen.textContent === "0") return;
-    if (num1 === 0) {
+    if (num1 === 0 || summed === true) {
         operator = btn.target.textContent;
         num1 = Number(bottomScreen.textContent);
-        userInput = [];
+        lastInput = [];
         topScreen.textContent = `${num1} ${operator}`;
+        summed = false;
     }
     else if (num1) {
         chainOperators();
@@ -85,7 +84,7 @@ const clearData = function (btn) {
         operator = "";
         num1 = 0;
         num2 = 0;
-        userInput = [];
+        lastInput = [];
         result = 0;
     }
 };
@@ -96,8 +95,8 @@ const clearData = function (btn) {
 const input = document.querySelectorAll(".number");
 input.forEach(button => button.addEventListener("click", display));
 
-const selectOperator = document.querySelectorAll(".operator");
-selectOperator.forEach(button => button.addEventListener("click", sign));
+const operatorButtons = document.querySelectorAll(".operator");
+operatorButtons.forEach(button => button.addEventListener("click", selectOperator));
 
 const equals = document.querySelector("#equals-btn");
 equals.addEventListener("click", operate);
