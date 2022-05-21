@@ -35,12 +35,12 @@ const operate = function () {
     topScreen.textContent = `${num1} ${operator} ${num2} =`;
     bottomScreen.textContent = result;
     num1 = result;
-    lastInput = [];
+    //lastInput = [];
     summed = true;
 };
 
 const display = function (btn) {
-    if (bottomScreen.textContent === "0") num2 = 0;
+    if (bottomScreen.textContent === "0") num2 = 0; //clear num2 if prev equation resulted in 0;
     if (result) {
         lastInput = [];
         result = "";
@@ -78,16 +78,27 @@ const selectOperator = function (btn) {
 }
 
 const clearData = function (btn) {
-    if (btn.target.id === "clear-all") {
-        topScreen.textContent = "";
-        bottomScreen.textContent = "0";
-        operator = "";
-        num1 = 0;
-        num2 = 0;
-        lastInput = [];
-        result = 0;
-    }
+    topScreen.textContent = "";
+    bottomScreen.textContent = "0";
+    operator = "";
+    num1 = 0;
+    num2 = 0;
+    lastInput = [];
+    result = 0;
 };
+
+
+const backspace = function () { 
+    console.log(typeof bottomScreen.textContent);
+    if (result) {
+        topScreen.textContent = "";
+        console.log(result);
+        return
+    } else if (bottomScreen.textContent.length === 1) {
+        lastInput = [], bottomScreen.textContent = "0"
+    } else bottomScreen.textContent = bottomScreen.textContent.slice(0, -1);
+
+}
 
 
 
@@ -101,7 +112,9 @@ operatorButtons.forEach(button => button.addEventListener("click", selectOperato
 const equals = document.querySelector("#equals-btn");
 equals.addEventListener("click", operate);
 
-const clearBtns = document.querySelectorAll(".clear");
-clearBtns.forEach(button => button.addEventListener("click", clearData));
+const clearAllBtn = document.querySelector("#clear-all");
+clearAllBtn.addEventListener("click", clearData);
 
+const undoBtn = document.querySelector("#undo");
+undoBtn.addEventListener("click", backspace);
 
