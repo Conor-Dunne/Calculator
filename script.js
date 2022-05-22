@@ -7,6 +7,9 @@ let num2 = 0;
 let operator = "";
 let result = 0;
 let summed = false;
+let subStr;
+
+
 
 const add = function (a, b) {
     return a + b;
@@ -41,12 +44,17 @@ const operate = function () {
 
 const display = function (btn) {
     if (bottomScreen.textContent === "0") num2 = 0; //clear num2 if prev equation resulted in 0;
+    
     if (result) {
         lastInput = [];
         result = "";
     }
+    if (lastInput.length > 10) {
+       lastInput.length = 10;
+    }
     lastInput.push(this.textContent);
     bottomScreen.textContent = lastInput.join("").toString();
+    console.log(lastInput.length);
 }
 
 const chainOperators = function (btn) {
@@ -88,18 +96,19 @@ const clearData = function (btn) {
 };
 
 
-const backspace = function () { 
-    console.log(typeof bottomScreen.textContent);
+const backspace = function () {
     if (result) {
         topScreen.textContent = "";
-        console.log(result);
         return
-    } else if (bottomScreen.textContent.length === 1) {
-        lastInput = [], bottomScreen.textContent = "0"
-    } else bottomScreen.textContent = bottomScreen.textContent.slice(0, -1);
-
+    }
+    else {
+        lastInput.pop();
+        bottomScreen.textContent = lastInput.join("").toString();
+    }
+    if (lastInput.length === 0) {
+        bottomScreen.textContent = "0"
+    }
 }
-
 
 
 //event listeners
