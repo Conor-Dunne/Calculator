@@ -49,9 +49,11 @@ const display = function (btn) {
         lastInput = [];
         result = "";
     }
-    if (lastInput.length > 10) {
+    if (lastInput.length === 10) {
        lastInput.length = 10;
-    }
+       console.log(lastInput.length);
+       return;
+    } else
     lastInput.push(this.textContent);
     bottomScreen.textContent = lastInput.join("").toString();
     console.log(lastInput.length);
