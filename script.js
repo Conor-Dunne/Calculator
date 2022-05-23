@@ -99,6 +99,19 @@ const clearData = function (btn) {
     result = 0;
 };
 
+const clearEntry = function (btn) {
+    bottomScreen.textContent = "0";
+    num2 = 0;
+    lastInput = [];
+};
+
+const changeNumberSign = function () {
+    let num = Number(bottomScreen.textContent);
+    num = num - (num*2);
+    console.log(num);
+    bottomScreen.textContent = num;
+};
+
 
 const backspace = function () {
     if (result) {
@@ -128,6 +141,12 @@ equals.addEventListener("click", operate);
 const clearAllBtn = document.querySelector("#clear-all");
 clearAllBtn.addEventListener("click", clearData);
 
+const clearEntryBtn = document.querySelector("#clear-entry");
+clearEntryBtn.addEventListener("click", clearEntry);
+
 const undoBtn = document.querySelector("#undo");
 undoBtn.addEventListener("click", backspace);
+
+const changeNumberSignBtn = document.querySelector("#change-sign");
+changeNumberSignBtn.addEventListener("click", changeNumberSign);
 
