@@ -28,6 +28,8 @@ const divide = function (a, b) {
 
 const operate = function () {
     num2 = Number(lastInput.join("").toString());
+    console.log(num1);
+    console.log(num2);
     if (operator === "") return;
     if (operator === "+") result = add(num1, num2);
     if (operator === "-") result = subtract(num1, num2);
@@ -108,7 +110,7 @@ const clearEntry = function (btn) {
 const changeNumberSign = function () {
     let num = Number(bottomScreen.textContent);
     num = num - (num*2);
-    console.log(num);
+    lastInput = [num];
     bottomScreen.textContent = num;
 };
 
