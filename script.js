@@ -1,4 +1,3 @@
-
 const topScreen = document.querySelector("#screen-top");
 const bottomScreen = document.querySelector("#screen-bottom");
 let lastInput = [];
@@ -7,7 +6,6 @@ let num2 = 0;
 let operator = "";
 let result = 0;
 let summed = false;
-let subStr;
 
 
 
@@ -35,28 +33,26 @@ const operate = function () {
     if (operator === "-") result = subtract(num1, num2);
     if (operator === "x") result = multiply(num1, num2);
     if (operator === "/") result = divide(num1, num2);
-    topScreen.textContent = `${num1} ${operator} ${num2} =`;
-    bottomScreen.textContent = result;
-    num1 = result;
-    //lastInput = [];
+    topScreen.textContent = `${checkIfFloat(num1)} ${operator} ${checkIfFloat(num2)} =`;
+    bottomScreen.textContent = checkIfFloat(result);
+    num1 = result
     summed = true;
 };
 
 const display = function (btn) {
     if (bottomScreen.textContent === "0") num2 = 0; //clear num2 if prev equation resulted in 0;
-    
+
     if (result) {
         lastInput = [];
         result = "";
     }
     if (lastInput.includes(".") && this.textContent === ".") return;
-    if (lastInput.length === 10) {
-       lastInput.length = 10;
-       return;
+    if (lastInput.length === 8) {
+        lastInput.length = 8;
+        return;
     } else
-    lastInput.push(this.textContent);
+        lastInput.push(this.textContent);
     bottomScreen.textContent = lastInput.join("").toString();
-    console.log(lastInput.length);
 }
 
 const chainOperators = function (btn) {
@@ -65,7 +61,7 @@ const chainOperators = function (btn) {
     if (operator === "-") result = subtract(num1, num2);
     if (operator === "x") result = multiply(num1, num2);
     if (operator === "/") result = divide(num1, num2);
-    num1 = result;
+    num1 = checkIfFloat(result);
     num2 = 0;
     lastInput = [];
 }
@@ -75,17 +71,23 @@ const selectOperator = function (btn) {
     if (num1 === 0 || summed === true) {
         operator = btn.target.textContent;
         num1 = Number(bottomScreen.textContent);
+        num1.toFixed(2);
         lastInput = [];
-        topScreen.textContent = `${num1} ${operator}`;
+        topScreen.textContent = `${checkIfFloat(num1)} ${operator}`;
         summed = false;
     }
     else if (num1) {
         chainOperators();
         operator = btn.target.textContent;
-        topScreen.textContent = `${result} ${operator}`;
+        topScreen.textContent = `${checkIfFloat(result)} ${operator}`;
 
     }
 }
+
+
+const checkIfFloat = function (num) {
+    return Number.isInteger(num) ? Number(num) : Number(num.toFixed(2));
+};
 
 const clearData = function (btn) {
     topScreen.textContent = "";
